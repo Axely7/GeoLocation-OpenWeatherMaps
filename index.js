@@ -1,5 +1,17 @@
-import { inquirerMenu, leerInput, pausa } from "./helpers/inquirer.js";
+import {
+  inquirerMenu,
+  leerInput,
+  listarLugares,
+  pausa,
+} from "./helpers/inquirer.js";
 import { Busquedas } from "./models/busquedas.js";
+import * as dotenv from "dotenv";
+
+dotenv.config();
+
+// Para acceder a variables de entorno de node: process.env
+
+// console.log(process.env);
 
 const main = async () => {
   let opt;
@@ -12,8 +24,11 @@ const main = async () => {
       case 1:
         // Mostrar mensaje
         const lugar = await leerInput("Ciudad: ");
-        await busquedas.ciudad(lugar);
+
         // Buscar los lugares
+        const lugares = await busquedas.ciudad(lugar);
+        const idSeleccionado = await listarLugares(lugares);
+        const lugarSeleccionado = lugares.find((l) => l.id === idSeleccionado);
 
         // Seleccionar el lugar
 
@@ -22,9 +37,9 @@ const main = async () => {
         // Mostrar Resultados:
 
         console.log("\nInformación de la ciudad\n".green);
-        console.log("Ciudad: ");
-        console.log("Lat: ");
-        console.log("Lng: ");
+        console.log("Ciudad: ", lugarSeleccionado.nombre);
+        console.log("Lat: ", lugarSeleccionado.lat);
+        console.log("Lng: ", lugarSeleccionado.lng);
         console.log("Temperatura: ");
         console.log("Mínima:");
         console.log("Máxima:");
