@@ -33,7 +33,11 @@ const main = async () => {
         // Seleccionar el lugar
 
         // Clima
-
+        const clima = await busquedas.climaLugar(
+          lugarSeleccionado.lat,
+          lugarSeleccionado.lng
+        );
+        console.log(clima);
         // Mostrar Resultados:
 
         console.log("\nInformación de la ciudad\n".green);
